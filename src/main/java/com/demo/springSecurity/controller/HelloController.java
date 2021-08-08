@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/springsecurity/demo")
 public class HelloController {
 	
+	/**
+	 * Sample Method for Welcome Message
+	 * @return
+	 */
 	@RequestMapping("/welcome/msg")
 	public String getWelcomeMessage() {
 		return "Hello Developers You are Welocome !!!!!!!!!!!!!!!";
