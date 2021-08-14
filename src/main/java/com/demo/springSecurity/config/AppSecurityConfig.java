@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
@@ -43,6 +44,25 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 		return provider;
 		
 	}
+	
+	@Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+            .antMatchers("/springsecurity/demo/welcome").hasAnyAuthority("USER", "DEVELOPER", "SALESMAN","INVESTOR", "ADMIN")
+            .antMatchers("/springsecurity/demo/welcome/msg").hasAnyAuthority("ADMIN", "DEVELOPER")
+            .antMatchers("/springsecurity/demo/welcome/seller").hasAnyAuthority("ADMIN", "SALESMAN")
+            .antMatchers("/springsecurity/demo/welcome/investor").hasAnyAuthority("ADMIN","INVESTOR")
+            .antMatchers("/springsecurity/demo/welcome/user").hasAnyAuthority("ADMIN","USER")
+            .antMatchers("/springsecurity/demo/welcome/admin").hasAuthority("ADMIN")
+            .anyRequest().authenticated()
+            .and()
+            .formLogin().permitAll()
+            .and()
+            .logout().permitAll()
+            .and()
+            .exceptionHandling().accessDeniedPage("/403")
+            ;
+    }
 
 	
 	

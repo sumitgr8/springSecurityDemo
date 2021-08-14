@@ -1,12 +1,16 @@
 package com.demo.springSecurity.Principal;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.demo.springSecurity.Dao.Role;
 import com.demo.springSecurity.Dao.SolarUser;
 
 public class UserPrincipal implements UserDetails {
@@ -23,7 +27,15 @@ public class UserPrincipal implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		return Collections.singleton(new SimpleGrantedAuthority("USER"));
+		//return Collections.singleton(new SimpleGrantedAuthority("USER"));
+		Set<Role> roles = user.getRoles();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+         
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+         
+        return authorities;
 	}
 
 	@Override
@@ -59,7 +71,7 @@ public class UserPrincipal implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return true;
+		return user.isEnabled();
 	}
 
 }
