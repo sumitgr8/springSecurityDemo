@@ -1,0 +1,10 @@
+CREATE TABLE `solaruser` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+   `username` varchar(100) NOT NULL,
+    `password` varchar(64) NOT NULL,
+   `full_name`  varchar(100) NOT NULL,
+  `phone` BIGINT NOT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `phone_UNIQUE` (`phone`),
+   UNIQUE KEY `user_UNIQUE` (`username`)
+);
